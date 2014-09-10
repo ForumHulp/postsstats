@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Statistics
+* @package Posts Statistics
 * @copyright (c) 2014 ForumHulp.com
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -44,7 +44,7 @@ class postsstats_module
 		{
 			case 'info':
 				$user->add_lang(array('install', 'acp/extensions', 'migrator'));
-				$ext_name = 'forumhulp/statistics';
+				$ext_name = 'forumhulp/postsstats';
 				$md_manager = new \phpbb\extension\metadata_manager($ext_name, $config, $phpbb_extension_manager, $template, $user, $phpbb_root_path);
 				try
 				{

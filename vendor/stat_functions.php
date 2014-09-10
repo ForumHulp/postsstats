@@ -515,24 +515,6 @@ class stat_functions
 	{
 		global $db, $config, $sconfig, $user, $tables, $request, $template, $phpbb_container;
 
-		$se_name = $request->variable('se_name', array('' => ''), true);
-		$se_query = $request->variable('se_query', array('' => ''), true);
-		$se_mark = $request->variable('mark', array('' => 0), true);
-		if (sizeof($se_name) == sizeof($se_query) && $request->variable('submit_ese', ''))
-		{
-			foreach($se_name as $key => $value)
-			{
-				if ($key != -1)
-				{
-					$sql = 'UPDATE ' . $tables['se'] . ' SET name = "' . $value . '", query = "' . $se_query[$key] . '" WHERE id  = '. $key;
-				} else if ($value != '' && $se_query[$key] != '')
-				{
-					$sql = 'INSERT INTO ' . $tables['se'] . ' VALUES(NULL, "' . $value . '", "' . $se_query[$key] . '")';
-				}
-				$db->sql_query($sql);
-			}
-		}
-
 		$sconfig = $request->variable('config', array('' => 0), true);
 		if (sizeof($sconfig))
 		{
@@ -540,27 +522,9 @@ class stat_functions
 			$db->sql_query($sql);
 		}
 
-		if (($request->is_set('dell_custom_page') ||  $request->is_set('submit_custom_page')) && ($request->variable('custom_page', '') != '' && $request->variable('custom_value', '') != ''))
-		{
-			$sql = 'SELECT custom_pages FROM ' . $tables['config'];
-			$result = $db->sql_query($sql);
-			$row = $db->sql_fetchfield('custom_pages');
-			$row = unserialize($row);
-			if ($request->is_set('dell_custom_page'))
-			{
-				unset($row[$request->variable('custom_page', '')]);
-			} else
-			{
-				$row[$request->variable('custom_page', '')] = strtoupper($request->variable('custom_value', ''));
-			}
-			asort($row);
-			$sql = 'UPDATE ' . $tables['config'] . ' SET custom_pages = "' . $db->sql_escape(serialize($row)) . '"';
-			$db->sql_query($sql);
-		}
-
 		if ($request->is_set('submit_start_screen'))
 		{
-			$sql = 'UPDATE ' . $tables['config'] . ' SET start_screen = "' . $request->variable('start_screen', 'default') . '", archive=' . $request->variable('archive', 0) . '';
+			$sql = 'UPDATE ' . $tables['config'] . ' SET start_screen = "' . $request->variable('start_screen', 'default') . '"';
 			$db->sql_query($sql);
 		}
 
@@ -568,21 +532,28 @@ class stat_functions
 		$result = $db->sql_query($sql);
 		$row = $db->sql_fetchrow($result);
 
-		for ($i = 0; $i < floor(sizeof($row) / 2) - 2; $i++)
+		for ($i = 0; $i < sizeof($row) - 1; $i++)
 		{
 			$template->assign_block_vars('options', array(
 				'KEY'			=> strtoupper(key($row)),
 				'TITLE'			=> $user->lang[strtoupper(key($row))],
 				'S_EXPLAIN'		=> (isset($user->lang[strtoupper(key($row)) . '_EXPLAIN'])) ? true : false,
 				'TITLE_EXPLAIN'	=> (isset($user->lang[strtoupper(key($row)) . '_EXPLAIN'])) ? $user->lang[strtoupper(key($row)) . '_EXPLAIN'] : '',
-				'CONTENT'		=> '<input type="number" name="config[' . key($row) . ']" id="config_' . key($row) . '" size="3" value="' . $row[key($row)] . '" /> <input name="config[' . str_replace('max_', 't_', key($row)) . ']" size="3" value="' . $row[str_replace('max_', 't_', key($row))] . '" />'
+				'CONTENT'		=> '<input type="number" name="config[' . key($row) . ']" id="config_' . key($row) . '" size="3" value="' . $row[key($row)] . '" />'
 			));
 			next($row);
 		}
 
+		$module_aray = array('gp', 'lastvisits', 'posts', 'ppt', 'ppu', 'ptv', 'tpf', 'tpo', 'tpu', 'tv', 'userstats');
+		$optionssc = '';
+		foreach($module_aray as $value)
+		{
+			$selected = ($value == $row['start_screen']) ? ' selected="selected"' : '';
+			$optionssc .= '<option value="' . $value . '"' . $selected . '>' . $user->lang[strtoupper($value)] . '</option>';
+		}
+
 		$template->assign_vars(array(
-			'OPTIONLIST'		=> $options,
-			'ARCHIVE'			=> ($row['archive']) ? ' checked= "checked"' : '',
+			'OPTIONLISTSC'		=> $optionssc,
 			'U_ACTION'			=> $uaction . '&amp;screen=config',
 			'SUB_DISPLAY'		=> 'config'
 		));

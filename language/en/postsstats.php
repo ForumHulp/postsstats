@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Statistics
+* @package Posts Statistics
 * @copyright (c) 2014 ForumHulp.com
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -43,33 +43,20 @@ $lang = array_merge($lang, array(
 	'YOV'	=> 'All Years overview',
 
 	//Config
-	'MAX_COUNTRIES'		=> 'Countries',
-	'MAX_REFERER'		=> 'Referrals',
-	'MAX_SE'			=> 'Search engines',
-	'MAX_SE_TERMS'		=> 'Search terms',
-	'MAX_BROWSERS'		=> 'Browsers',
-	'MAX_CRAWL'			=> 'Web Crawlers',
-	'MAX_OS'			=> 'Computer Systems',
-	'MAX_MODULES'		=> 'Modules',
-	'MAX_USERS'			=> 'Users',
-	'MAX_AVERAGES'		=> 'Averages',
-	'MAX_SCREENS'		=> 'Screen Resolutions',
-	'MAX_ONLINE'		=> 'Online',
-	'DELL'				=> 'Delete',
-	'SEARCHENG_EXPLAIN'	=> 'Change, edit, add or delete searchengines.',
-
-	'MAX_COUNTRIES_EXPLAIN'		=> 'See explanation at modules.',
-	'MAX_REFERER_EXPLAIN'		=> 'See explanation at modules',
-	'MAX_SE_EXPLAIN'			=> 'See explanation at modules',
-	'MAX_SE_TERMS_EXPLAIN'		=> 'See explanation at modules',
-	'MAX_BROWSERS_EXPLAIN'		=> 'See explanation at modules',
-	'MAX_CRAWL_EXPLAIN'			=> 'See explanation at modules',
-	'MAX_OS_EXPLAIN'			=> 'See explanation at modules',
-	'MAX_MODULES_EXPLAIN'		=> 'Maximum records in view display before pagination is in order, in table maximum records for pruning',
-	'MAX_USERS_EXPLAIN'			=> 'See explanation at modules',
-	'MAX_AVERAGES_EXPLAIN'		=> 'See explanation at modules',
-	'MAX_SCREENS_EXPLAIN'		=> 'See explanation at modules',
-	'MAX_ONLINE_EXPLAIN'		=> 'See explanation at modules',
+	'MAX_POSTS_PER_USER'			=> 'Max. post per user',
+	'MAX_POSTS_PER_USER_EXPLAIN'	=> 'Max. records in view',
+	'MAX_POSTS_PER_TOPIC'			=> 'Ma. post per topics',
+	'MAX_POSTS_PER_TOPIC_EXPLAIN'	=> 'Max. records in view',
+	'MAX_TOPICS_PER_USER'			=> 'Max. topics per user',
+	'MAX_TOPICS_PER_USER_EXPLAIN'	=> 'Max. records in view',
+	'MAX_TOPICS_PER_FORUM'			=> 'Max topics per forum',
+	'MAX_TOPICS_PER_FORUM_EXPLAIN'	=> 'Max. records in view',
+	'MAX_TOPICS_VIEWS'				=> 'Max. topics views',
+	'MAX_TOPICS_VIEWS_EXPLAIN'		=> 'Max. records in view',
+	'MAX_GROUPS_POSTS'				=> 'Max. group posts',
+	'MAX_GROUPS_POSTS_EXPLAIN'		=> 'Max. records in view',
+	'MAX_ONLINE'					=> 'Max. records in last posts',
+	'MAX_ONLINE_EXPLAIN'			=> 'Max. records per page',
 
 	'START_SCREEN'				=> 'Start screen',
 	'START_SCREEN_EXPLAIN'		=> 'Choose your startscreen for Board Statistics and if you want to display archive or online.',
