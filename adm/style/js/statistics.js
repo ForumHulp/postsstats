@@ -180,8 +180,8 @@
 
 									success : function (s, x) {
 										var chart = $('#chart').highcharts();
+										chart.setTitle(null, { text: s[2].title });
 										$('#table_title').text(s[2].descr + s[2].title);
-										$('#table_title').text(s[2].title);
 										
 										for (var i = 0; i < s[0].length; i++)
 										{
