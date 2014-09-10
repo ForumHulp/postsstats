@@ -1,0 +1,42 @@
+<!-- IF not VIEW_TABLE -->
+<table class="graph_table" id="graph_table" border="1">
+<thead>
+    <tr>
+        <th id="table_title" class="row-2 row-module">{TITLE}</th>
+    </tr>
+</thead>
+<tbody>
+    <!-- IF STATS -->
+    <tr>
+       <td>
+       <table style="width:100%;">
+       <tr>
+       <!-- IF PREV -->
+       <td><a id="prev" href="{U_ACTION}&amp;screen={ACT}{PREV}"><i class="fa fa-mail-reply" style="float:left;font-size: large;"></i></a></td>
+       <!-- ENDIF -->
+       <td style="width:100%; text-align:center"><div id="chart" style="width: 90%; height: 230px; margin: auto;"></div></td>
+       <!-- IF NEXT -->
+       <td style="text-align:right;"><a id="next" href="{U_ACTION}&amp;screen={ACT}{NEXT}"><i class="fa fa-mail-forward" style="float:left;font-size:large;"></i></a></td>
+       <!-- ENDIF -->
+       </tr>
+       </table>
+<!-- ENDIF -->
+		<script>
+        var stats = {STATS};
+		var dates = {DATES};
+		var title = '{TITLE}';
+		var ytitle = {HITSTITLE};
+		var btnena	= {BTNEN};
+		var labelenabled = {LABELENABLE};
+        </script>
+<!-- IF not VIEW_TABLE -->
+        </td>
+    </tr>
+    <!-- ELSE -->
+    <tr>
+        <td>{L_ACP_NO_ITEMS}</td>
+    </tr>
+    <!-- ENDIF -->
+</tbody>
+</table>
+<!-- ENDIF -->

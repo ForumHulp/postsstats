@@ -1,0 +1,31 @@
+{
+	"name": "forumhulp/postsstats",
+	"type": "phpbb-extension",
+	"description": "Posts Statistics displays an overview of your user's posts in Quick Access module of ACP.",
+	"homepage": "http://forumhulp.com",
+	"version": "3.1.0-RC3",
+	"keywords": ["forumhulp", "phpbb", "extension", "statistics"],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "John Peskens",
+			"email": "info@forumhulp.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.3.3",
+		"phpbb/phpbb": "3.1.*@dev"
+	},
+	"extra": {
+		"display-name": "Posts Statistics",
+		"soft-require": {
+           "phpbb/phpbb": "3.1.*@dev"
+        },
+		"version-check": {
+			"host": "forumhulp.com",
+			"directory": "/ext",
+			"filename": "index.php?id=34"
+		}
+	}
+}

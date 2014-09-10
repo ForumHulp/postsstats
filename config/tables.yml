@@ -1,0 +1,3 @@
+parameters:
+    tables.poststatconfig_table: %core.table_prefix%postsstat_config
+    tables.poststatdomain_table: %core.table_prefix%postsstat_domains
