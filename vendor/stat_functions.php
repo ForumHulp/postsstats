@@ -67,11 +67,11 @@ class stat_functions
 			$data[$row['posts_per']] = $row['total'];	
 		}
 
+		$series['name'] = 'Post';
 		for($i = 1; $i <= (($type == 0) ? self::days_in_month($month, $year) : (($type == 2) ? sizeof($data): 12)); $i++)
 		{
 			$t = ($type == 2) ? key($data) + $i - 1 : $i;
 		    
-   			$series['name'] = ($i == 1) ? 'Post' : $series['name'];
 			$series['data'][] = (isset($data[$t])) ? $data[$t] : 0;
 			$categories['data'][] = $t;
 		}
@@ -79,6 +79,8 @@ class stat_functions
 		$title['title'][] = (($type == 0) ? $user->lang['DOV'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
 							(($type == 1) ? $user->lang['MOV'] . ' ' . $year : $user->lang['YOV']));
 		$title['descr'][] = $user->lang['PPO'] . ': ';
+		$title['month'][] = $month;
+		$title['year'][] = $year;
 		array_push($ser, $series);
 		array_push($result, $ser, $categories, $title);
 
@@ -115,19 +117,20 @@ class stat_functions
 				WHERE ' . (($type < 2) ? 'YEAR(FROM_UNIXTIME(p.post_time)) = ' . $year : '1 = 1') . (($type == 0) ? ' AND MONTH(FROM_UNIXTIME(p.post_time)) = ' . $month : '') . '
 				GROUP BY p.poster_id ORDER BY total DESC LIMIT ' . $sconfig['max_posts_per_user'];
 		$result = $db->sql_query($sql);
-		$series = $categories = $title = $categories['data'] = $series['data'] = array();
-		$i = 0;
+		$series = $categories = $title = array();
+		$series['name'] = 'Post';
 		while ($row = $db->sql_fetchrow($result))
 		{
-   			$series['name'] = (++$i == 1) ? 'Post' : $series['name'];
 			$series['data'][] = (isset($row['total'])) ? $row['total'] : 0;
 			$categories['data'][] = $db->sql_escape($row['username']);
 		}
 		$result = $ser = array();
 		$title['title'][] = (($type == 0) ? $user->lang['DO'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
 							(($type == 1) ? $user->lang['MO'] . ' ' . $year : $user->lang['YO']));
-		array_push($ser, $series);
 		$title['descr'][] = $user->lang['PPU'] . ': ';
+		$title['month'][] = $month;
+		$title['year'][] = $year;
+		array_push($ser, $series);
 		array_push($result, $ser, $categories, $title);
 		$template->assign_vars(array(
 			'U_ACTION'		=> $uaction,
@@ -155,11 +158,10 @@ class stat_functions
 				WHERE ' . (($type < 2) ? 'YEAR(FROM_UNIXTIME(p.topic_time)) = ' . $year : '1 = 1') . (($type == 0) ? ' AND MONTH(FROM_UNIXTIME(p.topic_time)) = ' . $month : '') . '  
 				ORDER BY total DESC LIMIT ' . $sconfig['max_posts_per_topic'];
 		$result = $db->sql_query($sql);
-		$series = $categories = $title = $categories['data'] = $series['data'] = array();
-		$i = 0;
+		$series = $categories = $title = array();
+		$series['name'] = 'Post';
 		while ($row = $db->sql_fetchrow($result))
 		{
-   			$series['name'] = (++$i == 1) ? 'Post' : $series['name'];
 			$series['data'][] = (isset($row['total'])) ? $row['total'] : 0;
 			$categories['data'][] = $db->sql_escape($row['topic_title']);
 		}
@@ -167,6 +169,8 @@ class stat_functions
 		$title['title'][] = (($type == 0) ? $user->lang['DO'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
 							(($type == 1) ? $user->lang['MO'] . ' ' . $year : $user->lang['YO']));
 		$title['descr'][] = $user->lang['PPT'] . ': ';
+		$title['month'][] = $month;
+		$title['year'][] = $year;
 		array_push($ser, $series);
 		array_push($result, $ser, $categories, $title);
 		$template->assign_vars(array(
@@ -202,10 +206,10 @@ class stat_functions
 			$data[$row['topics_per']] = $row['total'];	
 		}
 
+		$series['name'] = 'Topics';
 		for($i = 1; $i <= (($type == 0) ? self::days_in_month($month, $year) : (($type == 2) ? sizeof($data): 12)); $i++)
 		{
 			$t = ($type == 2) ? key($data) + $i - 1 : $i;
-   			$series['name'] = ($i == 1) ? 'Topics' : $series['name'];
 			$series['data'][] = (isset($data[$t])) ? $data[$t] : 0;
 			$categories['data'][] = $t;
 		}
@@ -213,6 +217,8 @@ class stat_functions
 		$title['title'][] = (($type == 0) ? $user->lang['DOV'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
 							(($type == 1) ? $user->lang['MOV'] . ' ' . $year : $user->lang['YOV']));
 		$title['descr'][] = $user->lang['TPO'] . ': ';
+		$title['month'][] = $month;
+		$title['year'][] = $year;
 		array_push($ser, $series);
 		array_push($result, $ser, $categories, $title);
 
@@ -249,11 +255,10 @@ class stat_functions
 				WHERE ' . (($type < 2) ? 'YEAR(FROM_UNIXTIME(p.topic_time)) = ' . $year : '1 = 1') . (($type == 0) ? ' AND MONTH(FROM_UNIXTIME(p.topic_time)) = ' . $month : '') . '  
 				GROUP BY p.topic_poster ORDER BY total DESC LIMIT ' . $sconfig['max_topics_per_user'];
 		$result = $db->sql_query($sql);
-		$series = $categories = $title = $categories['data'] = $series['data'] = array();
-		$i = 0;
+		$series = $categories = $title = array();
+		$series['name'] = 'Topics';
 		while ($row = $db->sql_fetchrow($result))
 		{
-   			$series['name'] = (++$i == 1) ? 'Topics' : $series['name'];
 			$series['data'][] = (isset($row['total'])) ? $row['total'] : 0;
 			$categories['data'][] = $db->sql_escape($row['username']);
 		}
@@ -261,6 +266,8 @@ class stat_functions
 		$title['title'][] = (($type == 0) ? $user->lang['DO'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
 							(($type == 1) ? $user->lang['MO'] . ' ' . $year : $user->lang['YO']));
 		$title['descr'][] = $user->lang['TPU'] . ': ';
+		$title['month'][] = $month;
+		$title['year'][] = $year;
 		array_push($ser, $series);
 		array_push($result, $ser, $categories, $title);
 		$template->assign_vars(array(
@@ -289,11 +296,10 @@ class stat_functions
 				WHERE ' . (($type < 2) ? 'YEAR(FROM_UNIXTIME(forum_last_post_time)) = ' . $year : '1 = 1') . (($type == 0) ? ' AND MONTH(FROM_UNIXTIME(forum_last_post_time)) = ' . $month : '') . ' ORDER BY total DESC LIMIT ' . $sconfig['max_topics_per_forum'];
 		
 		$result = $db->sql_query($sql);
-		$series = $categories = $title = $categories['data'] = $series['data'] = array();
-		$i = 0;
+		$series = $categories = $title = array();
+		$series['name'] = 'Topics';
 		while ($row = $db->sql_fetchrow($result))
 		{
-   			$series['name'] = (++$i == 1) ? 'Topics' : $series['name'];
 			$series['data'][] = (isset($row['total'])) ? $row['total'] : 0;
 			$categories['data'][] = $db->sql_escape($row['forum_name']);
 		}
@@ -301,6 +307,8 @@ class stat_functions
 		$title['title'][] = (($type == 0) ? $user->lang['DO'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
 							(($type == 1) ? $user->lang['MO'] . ' ' . $year : $user->lang['YO']));
 		$title['descr'][] = $user->lang['TPF'] . ': ';
+		$title['month'][] = $month;
+		$title['year'][] = $year;
 		array_push($ser, $series);
 		array_push($result, $ser, $categories, $title);
 		$template->assign_vars(array(
@@ -329,11 +337,10 @@ class stat_functions
 				WHERE ' . (($type < 2) ? 'YEAR(FROM_UNIXTIME(topic_time)) = ' . $year : '1 = 1') . (($type == 0) ? ' AND MONTH(FROM_UNIXTIME(topic_time)) = ' . $month : '') . ' ORDER BY total DESC LIMIT ' . $sconfig['max_topics_views'];
 		
 		$result = $db->sql_query($sql);
-		$series = $categories = $title = $categories['data'] = $series['data'] = array();
-		$i = 0;
+		$series = $categories = $title = array();
+		$series['name'] = 'Topics';
 		while ($row = $db->sql_fetchrow($result))
 		{
-   			$series['name'] = (++$i == 1) ? 'Topics' : $series['name'];
 			$series['data'][] = (isset($row['total'])) ? $row['total'] : 0;
 			$categories['data'][] = $db->sql_escape($row['topic_title']);
 		}
@@ -341,6 +348,8 @@ class stat_functions
 		$title['title'][] = (($type == 0) ? $user->lang['DO'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
 							(($type == 1) ? $user->lang['MO'] . ' ' . $year : $user->lang['YO']));
 		$title['descr'][] = $user->lang['TV'] . ': ';
+		$title['month'][] = $month;
+		$title['year'][] = $year;
 		array_push($ser, $series);
 		array_push($result, $ser, $categories, $title);
 		$template->assign_vars(array(
@@ -372,11 +381,10 @@ class stat_functions
 				GROUP BY g.group_id ORDER BY total DESC LIMIT ' . $sconfig['max_groups_posts'];
 		
 		$result = $db->sql_query($sql);
-		$series = $categories = $title = $categories['data'] = $series['data'] = array();
-		$i = 0;
+		$series = $categories = $title = array();
+		$series['name'] = 'Posts';
 		while ($row = $db->sql_fetchrow($result))
 		{
-   			$series['name'] = (++$i == 1) ? 'Posts' : $series['name'];
 			$series['data'][] = (isset($row['total'])) ? $row['total'] : 0;
 			$categories['data'][] = isset($row['group_name']) ? $db->sql_escape($user->lang['G_' . $row['group_name']]) : 'Unknown';
 		}
@@ -384,6 +392,8 @@ class stat_functions
 		$title['title'][] = (($type == 0) ? $user->lang['DO'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
 							(($type == 1) ? $user->lang['MO'] . ' ' . $year : $user->lang['YO']));
 		$title['descr'][] = $user->lang['GP'] . ': ';
+		$title['month'][] = $month;
+		$title['year'][] = $year;
 		array_push($ser, $series);
 		array_push($result, $ser, $categories, $title);
 		$template->assign_vars(array(
@@ -434,7 +444,6 @@ class stat_functions
 		{
 			print json_encode($result, JSON_NUMERIC_CHECK);
 		}
-
 	}
 
 	public static function online($start = 0, $uaction = '')
