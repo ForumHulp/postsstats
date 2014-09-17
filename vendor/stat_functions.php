@@ -73,7 +73,7 @@ class stat_functions
 			$t = ($type == 2) ? key($data) + $i - 1 : $i;
 		    
 			$series['data'][] = (isset($data[$t])) ? $data[$t] : 0;
-			$categories['data'][] = $t;
+			$categories['data'][] = ($type == 1) ? $user->lang['datetime'][date('M', mktime(0, 0, 0, $t, 10))] : $t;
 		}
 		$result = $ser = array();
 		$title['title'][] = (($type == 0) ? $user->lang['DOV'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
@@ -211,7 +211,7 @@ class stat_functions
 		{
 			$t = ($type == 2) ? key($data) + $i - 1 : $i;
 			$series['data'][] = (isset($data[$t])) ? $data[$t] : 0;
-			$categories['data'][] = $t;
+			$categories['data'][] = ($type == 1) ? $user->lang['datetime'][date('M', mktime(0, 0, 0, $t, 10))] : $t;
 		}
 		$result = $ser = array();
 		$title['title'][] = (($type == 0) ? $user->lang['DOV'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
@@ -440,6 +440,50 @@ class stat_functions
 			'SUB_DISPLAY'	=> 'stats'
 		));
 
+		if ($request->variable('table', false))
+		{
+			print json_encode($result, JSON_NUMERIC_CHECK);
+		}
+	}
+
+	public static function tt($type = 0, $month, $year, $next, $prev, $uaction = '')
+	{
+		global $db, $config, $sconfig, $user, $request, $template;
+
+		$sql = 'SELECT COUNT(tt.user_id) as total, t.topic_title, tt.topic_id
+				FROM ' . TOPICS_TRACK_TABLE . ' tt
+				LEFT JOIN ' . TOPICS_TABLE . ' t ON t.topic_id = tt.topic_id
+				WHERE ' . (($type < 2) ? 'YEAR(FROM_UNIXTIME(t.topic_time)) <= ' . $year : '1 = 1') . (($type == 0) ? ' AND MONTH(FROM_UNIXTIME(t.topic_time)) <= ' . $month : '') . ' 
+				GROUP BY tt.topic_id ORDER BY total DESC, topic_time ASC LIMIT ' . $sconfig['max_topic_tracks'];
+		
+		$result = $db->sql_query($sql);
+		$series = $categories = $title = array();
+		$series['name'] = 'Topic tracks';
+		while ($row = $db->sql_fetchrow($result))
+		{
+			$series['data'][] = (isset($row['total'])) ? $row['total'] : 0;
+			$categories['data'][] = isset($row['topic_title']) ? $db->sql_escape($row['topic_title']) : 'Unknown';
+		}
+		$result = $ser = array();
+		$title['title'][] = (($type == 0) ? $user->lang['DO'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
+							(($type == 1) ? $user->lang['MO'] . ' ' . $year : $user->lang['YO']));
+		$title['descr'][] = $user->lang['GP'] . ': ';
+		$title['month'][] = $month;
+		$title['year'][] = $year;
+		array_push($ser, $series);
+		array_push($result, $ser, $categories, $title);
+		$template->assign_vars(array(
+			'U_ACTION'		=> $uaction,
+			'PREV'			=> $prev,
+			'NEXT'			=> $next,
+			'STATS'			=> '[' . json_encode($series, JSON_NUMERIC_CHECK) . ']',
+			'DATES'			=> '[\'' . (isset($categories['data']) ? implode('\', \'', $categories['data']) : '') . '\']',
+			'TITLE'			=> $title['title'][0],
+			'HITSTITLE'		=> '\'' . $user->lang['POSTS'] . ' /\ ' . $user->lang['GROUP'] . '\'',
+			'LABELENABLE'	=> 'false',
+			'BTNEN'			=> 'true',
+			'SUB_DISPLAY'	=> 'stats'
+		));
 		if ($request->variable('table', false))
 		{
 			print json_encode($result, JSON_NUMERIC_CHECK);
