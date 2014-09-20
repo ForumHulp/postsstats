@@ -7,7 +7,7 @@
 *
 */
 
-namespace forumhulp\postsstats\migration;
+namespace forumhulp\postsstats\migrations;
 
 class install_postsstats extends \phpbb\db\migration\migration
 {
