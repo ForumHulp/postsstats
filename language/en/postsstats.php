@@ -58,6 +58,8 @@ $lang = array_merge($lang, array(
 	'MAX_GROUPS_POSTS_EXPLAIN'		=> 'Max. records in view',
 	'MAX_ONLINE'					=> 'Max. records in last posts',
 	'MAX_ONLINE_EXPLAIN'			=> 'Max. records per page',
+	'MAX_TOPIC_TRACKS'				=> 'Max. records in topic tracks',
+	'MAX_TOPIC_TRACKS_EXPLAIN'		=> 'Max. records per view',
 
 	'START_SCREEN'				=> 'Start screen',
 	'START_SCREEN_EXPLAIN'		=> 'Choose your startscreen for Board Statistics and if you want to display archive or online.',
