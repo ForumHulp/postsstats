@@ -366,7 +366,7 @@ class stat_functions
 		global $db, $config, $sconfig, $user, $request, $template;
 
 		$sql = 'SELECT u.group_id, g.group_name, COUNT(p.post_id) AS total FROM ' . POSTS_TABLE . ' P
-				LEFT JOIN ' . USERS_TABLE . ' U ON U.user_id = p.poster_id
+				LEFT JOIN ' . USERS_TABLE . ' u ON U.user_id = p.poster_id
 				LEFT JOIN ' . GROUPS_TABLE . ' g ON g.group_id = u.group_id
 				WHERE ' . (($type < 2) ? 'YEAR(FROM_UNIXTIME(p.post_time)) = ' . $year : '1 = 1') . (($type == 0) ? ' AND MONTH(FROM_UNIXTIME(p.post_time)) = ' . $month : '') . ' 
 				GROUP BY g.group_id ORDER BY total DESC LIMIT ' . $sconfig['max_groups_posts'];
