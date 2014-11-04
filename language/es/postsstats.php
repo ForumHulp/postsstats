@@ -31,9 +31,9 @@ $lang = array_merge($lang, array(
 	'TV'		=> 'Vistas de temas',
 	'GP'		=> 'Mensajes de grupos',
 	'PTV'		=> 'Mensajes / Temas',
-	'TT'		=> 'Topic tracks',
+	'TT'		=> 'Pistas del Tema',
 
-	'USERSTATS'	=> 'User graph',
+	'USERSTATS'	=> 'Gráfico de usuario',
 	'LASTVISITS'	=> 'Últimos mensajes',
 
 	'DO'	=> 'Visión general mensual',
@@ -60,6 +60,6 @@ $lang = array_merge($lang, array(
 	'MAX_ONLINE_EXPLAIN'			=> 'Max. registros por página',
 
 	'START_SCREEN'				=> 'Pantalla de inicio',
-	'START_SCREEN_EXPLAIN'		=> 'Choose your startscreen for Board Statistics and if you want to display archive or online.',
+	'START_SCREEN_EXPLAIN'		=> 'Elija su pantalla de inicio de Estadísticas del foro y si desea mostrar los archivos o en línea.',
 
 ));
