@@ -127,10 +127,6 @@ class postsstats_module
 				\stat_functions::ptv($type, $month, $year, $next, $prev, $this->u_action);
 			break;
 
-			case 'tt':
-				\stat_functions::tt($type, $month, $year, $next, $prev, $this->u_action);
-			break;
-
 			case 'config':
 				\stat_functions::config($start, $this->u_action);
 			break;

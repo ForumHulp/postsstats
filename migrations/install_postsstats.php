@@ -13,7 +13,7 @@ class install_postsstats extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return isset($this->config['postsstats_version']) && version_compare($this->config['postsstats_version'], '3.1.0.RC4', '>=');
+		return isset($this->config['postsstats_version']) && version_compare($this->config['postsstats_version'], '3.1.0', '>=');
 	}
 
 	static public function depends_on()
@@ -34,7 +34,6 @@ class install_postsstats extends \phpbb\db\migration\migration
 						'max_topics_per_forum'	=> array('UINT:4', 20),
 						'max_topics_views'		=> array('UINT:4', 20),
 						'max_groups_posts'		=> array('UINT:4', 20),
-						'max_topic_tracks'		=> array('UINT:4', 20),
 						'max_online'			=> array('UINT:4', 20),
 						'start_screen'			=> array('VCHAR:25', 'default'),
 					),
@@ -67,7 +66,7 @@ class install_postsstats extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return array(
-			array('config.add', array('postsstatistics_version', '3.1.0.RC4')),
+			array('config.add', array('postsstatistics_version', '3.1.0')),
 			array('module.add', array(
 				'acp', 'ACP_QUICK_ACCESS', array(
 					'module_basename'	=> '\forumhulp\postsstats\acp\postsstats_module',

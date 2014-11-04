@@ -1,1 +1,216 @@
-function updateQueryStringParameter(e,t,n){var r=new RegExp("([?&])"+t+"=.*?(&|$)","i");var i=e.indexOf("?")!==-1?"&":"?";if(e.match(r)){return e.replace(r,"$1"+t+"="+n+"$2")}else{return e+i+t+"="+n}}function removeURLParameter(e,t){var n=e.split("?");if(n.length>=2){var r=encodeURIComponent(t)+"=";var i=n[1].split(/[&;]/g);for(var s=i.length;s-->0;){if(i[s].lastIndexOf(r,0)!==-1){i.splice(s,1)}}e=n[0]+"?"+i.join("&");return e}else{return e}}(function(e,t,n){function i(){var o=e("#circle");o.prop("title",r+" seconds until refresh");if(r===0){clearInterval(s);o.removeClass("fa-circle-o-notch");o.addClass("fa-refresh");e.ajax({url:t.location.href+"&table=true",context:n.getElementById("statistics_table"),error:function(t,n,r){o.css("display","none");if(n=="timeout"){e("#LoadErrorTimeout").css("display","inline-block");e("#LoadError").css("display","block")}else{e("#LoadPageError").css("display","inline-block");e("#LoadError").css("display","block")}},success:function(t,n){r=59;o.removeClass("fa-refresh");o.addClass("fa-circle-o-notch");s=setInterval(i,1e3);e(this).html(t)}})}r--}var r=59;if(e("#circle").length)var s=setInterval(i,1e3);e("a.simpledialog").simpleDialog({opacity:.1,width:"650px",height:"600px"});if(typeof stats!=="undefined"){e(function(){e("#chart").highcharts({chart:{type:"column"},title:{text:""},subtitle:{text:title},xAxis:{categories:dates,labels:{enabled:labelenabled}},yAxis:{min:0,title:{text:ytitle}},credits:{enabled:false,text:"ForumHulp.com",href:"http://forumhulp.com"},legend:{enabled:false},tooltip:{headerFormat:'<span style="font-size:10px">{point.key}</span><table>',pointFormat:'<tr><td style="color:{series.color};padding:0">{series.name}: </td>'+'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',footerFormat:"</table>",shared:true,useHTML:true},plotOptions:{column:{pointPadding:.2,borderWidth:0}},series:stats,lang:{dayKey:"Monthly overview",monthKey:"Yearly overview",yearKey:"All years overview"},exporting:{buttons:{dayButton:{enabled:btnena,x:-40,onclick:function(){e.ajax({url:t.location.href+"&t=0&table=true",type:"get",dataType:"json",success:function(t,n){var r=e("#chart").highcharts();r.setTitle(null,{text:t[2].title});e("#table_title").text(t[2].descr+t[2].title);for(var i=0;i<t[0].length;i++){r.series[i].setData(t[0][i].data,false)}r.xAxis[0].setCategories(t[1].data,true);var s=e("#prev").attr("href");s=updateQueryStringParameter(s,"t",0);var o=new Date(t[2].year,t[2].month,1);o.setMonth(o.getMonth()-1);s=updateQueryStringParameter(s,"m",o.getMonth());s=updateQueryStringParameter(s,"y",o.getFullYear());e("#prev").attr("href",s);e("#prev").show();var s=e("#next").attr("href");s=updateQueryStringParameter(s,"t",0);o.setMonth(o.getMonth()+2);s=updateQueryStringParameter(s,"m",o.getMonth());s=updateQueryStringParameter(s,"y",o.getFullYear());e("#next").attr("href",s);e("#next").show()}})},symbol:"circle",_titleKey:"dayKey"},monthButton:{enabled:btnena,x:-65,onclick:function(){e.ajax({url:t.location.href+"&t=1&table=true",type:"get",dataType:"json",success:function(t,n){var r=e("#chart").highcharts();r.setTitle(null,{text:t[2].title});e("#table_title").text(t[2].descr+t[2].title);for(var i=0;i<t[0].length;i++){r.series[i].setData(t[0][i].data,false)}r.xAxis[0].setCategories(t[1].data,true);var s=e("#prev").attr("href");s=updateQueryStringParameter(s,"t",1);var o=new Date(t[2].year,t[2].month,1);o.setYear(o.getFullYear()-1);s=updateQueryStringParameter(s,"y",o.getFullYear());s=removeURLParameter(s,"m");e("#prev").attr("href",s);e("#prev").show();var s=e("#next").attr("href");s=updateQueryStringParameter(s,"t",1);o.setYear(o.getFullYear()+2);s=updateQueryStringParameter(s,"y",o.getFullYear());s=removeURLParameter(s,"m");e("#next").attr("href",s);e("#next").show()}})},symbol:"circle",_titleKey:"monthKey"},yearButton:{enabled:btnena,x:-90,onclick:function(){e.ajax({url:t.location.href+"&t=2&table=true",type:"get",dataType:"json",success:function(t,n){var r=e("#chart").highcharts();r.setTitle(null,{text:t[2].title});e("#table_title").text(t[2].descr+t[2].title);for(var i=0;i<t[0].length;i++){r.series[i].setData(t[0][i].data,false)}r.xAxis[0].setCategories(t[1].data,true);e("#prev").hide();e("#next").hide()}})},symbol:"circle",_titleKey:"yearKey"}}}})})}})(jQuery,window,document)
+; (function ($, window, document) {
+	// do stuff here and use $, window and document safely
+	// https://www.phpbb.com/community/viewtopic.php?p=13589106#p13589106
+	var time = 59;
+	function progress() {
+		var element = $('#circle');
+		element.prop('title', time + ' seconds until refresh');
+		//element.html(time);
+		if (time === 0) {
+			clearInterval(interval);
+			element.removeClass("fa-circle-o-notch");
+			element.addClass("fa-refresh");
+			$.ajax({
+				url: window.location.href + "&table=true",
+				context: document.getElementById("statistics_table"),
+				error: function (e, text, ee) {
+					element.css("display", "none");
+					if (text == "timeout") {
+						$("#LoadErrorTimeout").css("display", "inline-block");
+						$("#LoadError").css("display", "block");
+					} else {
+						$("#LoadPageError").css("display", "inline-block");
+						$("#LoadError").css("display", "block");
+					}
+				},
+				success: function (s, x) {
+					time = 59;
+					element.removeClass("fa-refresh");
+					element.addClass("fa-circle-o-notch");
+					interval = setInterval(progress, 1000);
+					$(this).html(s);
+				}
+			});
+		}
+		time--;
+	}
+	if ($('#circle').length) var interval = setInterval(progress, 1000);
+	
+	$("a.simpledialog").simpleDialog({
+	    opacity: 0.1,
+	    width: '650px',
+		height: '600px'
+	});
+	
+	if (typeof stats !== 'undefined')
+	{
+		$(function () {
+			$('#chart').highcharts({
+				chart: {
+					type: 'column'
+				},
+				title: {
+					text: ''
+				},
+				subtitle: {
+					text: title
+				},
+				xAxis: {
+					categories: dates,
+					labels: {
+						enabled: labelenabled
+					}
+				},
+				yAxis: {
+					min: 0,
+					title: {
+						text: ytitle
+					}
+				},
+				credits: {
+					enabled: false,
+					text: 'ForumHulp.com',
+					href: 'http://forumhulp.com'
+				},
+				legend: {
+					enabled: false,
+				},
+				tooltip: {
+					headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+					pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+						'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+					footerFormat: '</table>',
+					shared: true,
+					useHTML: true
+				},
+				plotOptions: {
+					column: {
+						pointPadding: 0.2,
+						borderWidth: 0
+					}
+				},
+				series: stats,
+				lang: {
+				   dayKey: 'Monthly overview',
+				   monthKey: 'Yearly overview',
+				   yearKey: 'All years overview'
+				},
+				exporting: {
+					buttons: {
+						dayButton: {
+							enabled: btnena,
+							x: -40,
+							onclick: function () {
+								$.ajax({
+									url: window.location.href + "&t=0&table=true",
+									type:'get',
+									dataType: "json",
+								
+									success : function (s, x) {
+										var chart = $('#chart').highcharts();
+										
+										chart.setTitle(null, { text: s[2].title });
+										$('#table_title').text(s[2].descr + s[2].title);
+										for (var i = 0; i < s[0].length; i++)
+										{
+											chart.series[i].setData(s[0][i].data, false);
+										}
+										chart.xAxis[0].setCategories(s[1].data, true);
+										
+										var uri = $("#prev").attr("href");
+										uri = updateQueryStringParameter(uri, 't', 0);
+										$('#prev').attr('href', uri);
+										$('#prev').show();
+
+										var uri = $("#next").attr("href");
+										uri = updateQueryStringParameter(uri, 't', 0);
+										$('#next').attr('href', uri);
+										$('#next').show();
+									}
+								});
+							},
+							symbol: 'circle',
+							 _titleKey: "dayKey"
+						},
+						
+						monthButton: {
+							enabled: btnena,
+							x: -65,
+							onclick: function () {
+								$.ajax({
+									url: window.location.href + "&t=1&table=true",
+									type:'get',
+									dataType: "json",
+								
+									success : function (s, x) {
+										var chart = $('#chart').highcharts();
+										
+										chart.setTitle(null, { text: s[2].title });
+										$('#table_title').text(s[2].descr + s[2].title);
+										for (var i = 0; i < s[0].length; i++)
+										{
+											chart.series[i].setData(s[0][i].data, false);
+										}
+										chart.xAxis[0].setCategories(s[1].data, true);
+										
+										var uri = $("#prev").attr("href");
+										uri = updateQueryStringParameter(uri, 't', 1);
+										$('#prev').attr('href', uri);
+										$('#prev').show();
+
+										var uri = $("#next").attr("href");
+										uri = updateQueryStringParameter(uri, 't', 1);
+										$('#next').attr('href', uri);
+										$('#next').show();
+									}
+								});
+							},
+							symbol: 'circle',
+							 _titleKey: "monthKey"
+						},
+					
+						yearButton: {
+							enabled: btnena,
+							x: -90,
+							onclick: function () {
+								$.ajax({
+									url: window.location.href + "&t=2&table=true",
+									type:'get',
+									dataType: "json",
+
+									success : function (s, x) {
+										var chart = $('#chart').highcharts();
+										chart.setTitle(null, { text: s[2].title });
+										$('#table_title').text(s[2].descr + s[2].title);
+										
+										for (var i = 0; i < s[0].length; i++)
+										{
+											chart.series[i].setData(s[0][i].data, false);
+										}
+										chart.xAxis[0].setCategories(s[1].data, true);
+										
+										$('#prev').hide();
+										$('#next').hide();
+									}
+								});
+							},
+							symbol: 'circle',
+							_titleKey: 'yearKey',
+						}
+					}
+				}				
+			});
+		});	
+	}
+})(jQuery, window, document);
+
+function updateQueryStringParameter(uri, key, value) {
+  var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+  var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+  if (uri.match(re)) {
+    return uri.replace(re, '$1' + key + "=" + value + '$2');
+  }
+  else {
+    return uri + separator + key + "=" + value;
+  }
+}
