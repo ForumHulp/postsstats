@@ -151,8 +151,9 @@ class stat_functions
 	{
 		global $db, $config, $sconfig, $user, $request, $template;
 
-		$sql = 'SELECT p.topic_id, p.topic_title, p.topic_replies AS total FROM ' . TOPICS_TABLE . ' p
-				WHERE ' . (($type < 2) ? 'YEAR(FROM_UNIXTIME(p.topic_time)) = ' . $year : '1 = 1') . (($type == 0) ? ' AND MONTH(FROM_UNIXTIME(p.topic_time)) = ' . $month : '') . '  
+		$sql = 'SELECT t.topic_id, t.topic_title, COUNT(p.post_id) AS total FROM ' . TOPICS_TABLE . ' t
+				LEFT JOIN ' . POSTS_TABLE . ' p ON p.topic_id = t.topic_id
+				WHERE ' . (($type < 2) ? 'YEAR(FROM_UNIXTIME(t.topic_time)) = ' . $year : '1 = 1') . (($type == 0) ? ' AND MONTH(FROM_UNIXTIME(t.topic_time)) = ' . $month : '') . '  
 				ORDER BY total DESC LIMIT ' . $sconfig['max_posts_per_topic'];
 		$result = $db->sql_query($sql);
 		$series = $categories = $title = $categories['data'] = $series['data'] = array();
@@ -285,7 +286,8 @@ class stat_functions
 	{
 		global $db, $config, $sconfig, $user, $request, $template;
 
-		$sql = 'SELECT forum_id, forum_name, forum_topics_real AS total FROM ' . FORUMS_TABLE . '
+		$sql = 'SELECT f.forum_id, f.forum_name, COUNT(topic_id) AS total FROM ' . FORUMS_TABLE . ' f
+				LEFT JOIN ' . TOPICS_TABLE . ' t ON t.forum_id = f.forum_id
 				WHERE ' . (($type < 2) ? 'YEAR(FROM_UNIXTIME(forum_last_post_time)) = ' . $year : '1 = 1') . (($type == 0) ? ' AND MONTH(FROM_UNIXTIME(forum_last_post_time)) = ' . $month : '') . ' ORDER BY total DESC LIMIT ' . $sconfig['max_topics_per_forum'];
 		
 		$result = $db->sql_query($sql);
