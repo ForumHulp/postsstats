@@ -33,6 +33,7 @@ $lang = array_merge($lang, array(
 	'GP'		=> 'Gruppinlägg',
 	'PTV'		=> 'Inlägg / Ämnen',
 	'TT'		=> 'Ämnesuppföljning',
+	'POL'		=> 'Poll overview',
 
 	'USERSTATS'	=> 'Användardiagram',
 	'LASTVISITS'	=> 'Senaste inlägg',

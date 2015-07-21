@@ -31,6 +31,7 @@ $lang = array_merge($lang, array(
 	'TV'		=> 'Topics views',
 	'GP'		=> 'Groups posts',
 	'PTV'		=> 'Post / Topics',
+	'POL'		=> 'Poll overview',
 
 	'USERSTATS'	=> 'User graph',
 	'LASTVISITS'	=> 'Last posts',

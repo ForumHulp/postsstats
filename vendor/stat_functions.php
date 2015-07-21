@@ -86,7 +86,7 @@ class stat_functions
 		{
 			return $result;	
 		}
-	
+
 		$template->assign_vars(array(
 			'U_ACTION'		=> $uaction,
 			'PREV'			=> $prev,
@@ -221,7 +221,7 @@ class stat_functions
 		{
 			return $result;
 		}
-		
+
 		$template->assign_vars(array(
 			'U_ACTION'		=> $uaction,
 			'PREV'			=> $prev,
@@ -437,6 +437,54 @@ class stat_functions
 			print json_encode($result, JSON_NUMERIC_CHECK);
 		}
 
+	}
+
+	public static function poll($type = 0, $month, $year, $next, $prev, $uaction = '')
+	{
+		global $db, $config, $sconfig, $user, $request, $template;
+
+		$sql = 'SELECT COUNT(poll_start) as total, ' .(($type == 1) ? 'MONTH' : (($type == 2) ? 'YEAR' : 'DAY')) . '(FROM_UNIXTIME(topic_time)) as topics_per FROM ' . TOPICS_TABLE . ' 
+				WHERE ' . (($type < 2) ? 'YEAR(FROM_UNIXTIME(topic_time)) = ' . $year : '1 = 1') . (($type == 0) ? ' AND MONTH(FROM_UNIXTIME(topic_time)) = ' . $month : '') . '  
+				AND poll_start > 0 
+				GROUP BY topics_per ORDER BY DAY(FROM_UNIXTIME(topic_time))';
+		$result = $db->sql_query($sql);
+		$series = $categories = $title = array();
+		while ($row = $db->sql_fetchrow($result))
+		{
+			$data[$row['topics_per']] = $row['total'];	
+		}
+
+		for($i = 1; $i <= (($type == 0) ? self::days_in_month($month, $year) : (($type == 2) ? sizeof($data): 12)); $i++)
+		{
+			$t = ($type == 2) ? key($data) + $i - 1 : $i;
+   			$series['name'] = ($i == 1) ? 'Poll' : $series['name'];
+			$series['data'][] = (isset($data[$t])) ? $data[$t] : 0;
+			$categories['data'][] = $t;
+		}
+		$result = $ser = array();
+		$title['title'][] = (($type == 0) ? $user->lang['DOV'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
+							(($type == 1) ? $user->lang['MOV'] . ' ' . $year : $user->lang['YOV']));
+		$title['descr'][] = $user->lang['POL'] . ': ';
+		array_push($ser, $series);
+		array_push($result, $ser, $categories, $title);
+
+		$template->assign_vars(array(
+			'U_ACTION'		=> $uaction,
+			'PREV'			=> $prev,
+			'NEXT'			=> $next,
+			'STATS'			=> '[' . json_encode($series, JSON_NUMERIC_CHECK) . ']',
+			'DATES'			=> '[' . implode(',', $categories['data']) . ']',
+			'TITLE'			=> $title['title'][0],
+			'HITSTITLE'		=> '\'' . $user->lang['POL'] . '\'',
+			'LABELENABLE'	=> 'true',
+			'BTNEN'			=> 'true',
+			'SUB_DISPLAY'	=> 'stats'
+		));
+
+		if ($request->variable('table', false))
+		{
+			print json_encode($result, JSON_NUMERIC_CHECK);
+		}
 	}
 
 	public static function online($start = 0, $uaction = '')

@@ -32,6 +32,7 @@ $lang = array_merge($lang, array(
 	'GP'		=> 'Mensajes de grupos',
 	'PTV'		=> 'Mensajes / Temas',
 	'TT'		=> 'Pistas del Tema',
+	'POL'		=> 'Poll overview',
 
 	'USERSTATS'	=> 'Gráfico de usuario',
 	'LASTVISITS'	=> 'Últimos mensajes',
