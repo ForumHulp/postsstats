@@ -1,7 +1,7 @@
 Posts Statistics
 ===========
 
-Posts Statistics displays an overview of your user's posts in Quick Access module of ACP.
+Posts Statistics displays an overview of your user's posts activities in Quick Access module of ACP.
 
 [![Build Status](https://travis-ci.org/ForumHulp/postsstats.svg?branch=master)](https://travis-ci.org/ForumHulp/postsstats)
 
