@@ -1,9 +1,9 @@
 <?php
 /**
 *
-* @package Posts Statistics
+* @package PostsStatistics
 * @copyright (c) 2014 ForumHulp.com
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+* @license Proprietary
 *
 */
 
@@ -34,7 +34,7 @@ $lang = array_merge($lang, array(
 	'POL'		=> 'Poll overview',
 
 	'USERSTATS'	=> 'User graph',
-	'LASTVISITS'	=> 'Last posts',
+	'ONLINE'	=> 'Last posts',
 
 	'DO'	=> 'Monthly overview',
 	'DOV'	=> 'Daily overview',
@@ -61,5 +61,4 @@ $lang = array_merge($lang, array(
 
 	'START_SCREEN'				=> 'Start screen',
 	'START_SCREEN_EXPLAIN'		=> 'Choose your startscreen for Board Statistics and if you want to display archive or online.',
-
 ));

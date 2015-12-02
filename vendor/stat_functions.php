@@ -367,7 +367,7 @@ class stat_functions
 	{
 		global $db, $config, $sconfig, $user, $request, $template;
 
-		$sql = 'SELECT u.group_id, g.group_name, COUNT(p.post_id) AS total FROM ' . POSTS_TABLE . ' p
+		$sql = 'SELECT u.group_id, g.group_name, g.group_type, COUNT(p.post_id) AS total FROM ' . POSTS_TABLE . ' p
 				LEFT JOIN ' . USERS_TABLE . ' u ON u.user_id = p.poster_id
 				LEFT JOIN ' . GROUPS_TABLE . ' g ON g.group_id = u.group_id
 				WHERE ' . (($type < 2) ? 'YEAR(FROM_UNIXTIME(p.post_time)) = ' . $year : '1 = 1') . (($type == 0) ? ' AND MONTH(FROM_UNIXTIME(p.post_time)) = ' . $month : '') . ' 
@@ -380,7 +380,7 @@ class stat_functions
 		{
    			$series['name'] = (++$i == 1) ? 'Posts' : $series['name'];
 			$series['data'][] = (isset($row['total'])) ? $row['total'] : 0;
-			$categories['data'][] = isset($row['group_name']) ? $db->sql_escape($user->lang['G_' . $row['group_name']]) : 'Unknown';
+			$categories['data'][] = ($row['group_type'] == GROUP_SPECIAL) ? $user->lang['G_' . $row['group_name']] : $row['group_name'];
 		}
 		$result = $ser = array();
 		$title['title'][] = (($type == 0) ? $user->lang['DO'] . ' ' . date("F",mktime(0,0,0,$month,1,$year)) . ' ' . $year :
@@ -574,7 +574,7 @@ class stat_functions
 
 		if ($request->is_set('submit_start_screen'))
 		{
-			$sql = 'UPDATE ' . $tables['config'] . ' SET start_screen = "' . $request->variable('start_screen', 'default') . '"';
+			$sql = 'UPDATE ' . $tables['config'] . ' SET start_screen = "' . $request->variable('start_screen', 'online') . '"';
 			$db->sql_query($sql);
 		}
 
@@ -594,7 +594,7 @@ class stat_functions
 			next($row);
 		}
 
-		$module_aray = array('gp', 'lastvisits', 'posts', 'ppt', 'ppu', 'ptv', 'tpf', 'tpo', 'tpu', 'tv', 'userstats');
+		$module_aray = array('gp', 'online', 'posts', 'ppt', 'ppu', 'ptv', 'tpf', 'tpo', 'tpu', 'tv', 'userstats');
 		$optionssc = '';
 		foreach($module_aray as $value)
 		{

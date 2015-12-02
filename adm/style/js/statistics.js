@@ -39,7 +39,6 @@
 	$("a.simpledialog").simpleDialog({
 	    opacity: 0.1,
 	    width: '650px',
-		height: '600px'
 	});
 	
 	if (typeof stats !== 'undefined')
@@ -91,9 +90,9 @@
 				},
 				series: stats,
 				lang: {
-				   dayKey: 'Monthly overview',
-				   monthKey: 'Yearly overview',
-				   yearKey: 'All years overview'
+				   dayKey: dayKey,
+				   monthKey: monthKey,
+				   yearKey: yearKey
 				},
 				exporting: {
 					buttons: {

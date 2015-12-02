@@ -1,9 +1,9 @@
 <?php
 /**
 *
-* @package Posts Statistics
+* @package PostsStatistics
 * @copyright (c) 2014 ForumHulp.com
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+* @license Proprietary
 *
 */
 
@@ -62,5 +62,4 @@ $lang = array_merge($lang, array(
 
 	'START_SCREEN'				=> 'Pantalla de inicio',
 	'START_SCREEN_EXPLAIN'		=> 'Elija su pantalla de inicio de Estadísticas del foro y si desea mostrar los archivos o en línea.',
-
 ));

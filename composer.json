@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Posts Statistics displays an overview of your user's posts in Quick Access module of ACP.",
 	"homepage": "http://forumhulp.com",
-	"version": "3.1.0-RC6",
+	"version": "3.1.0",
 	"keywords": ["forumhulp", "phpbb", "extension", "statistics"],
 	"license": "GPL-2.0",
 	"authors": [
@@ -24,7 +24,7 @@
 	"extra": {
 		"display-name": "Posts Statistics",
 		"soft-require": {
-			"phpbb/phpbb": ">=3.1.0,<3.2.*@dev"
+			"phpbb/phpbb": ">=3.1.0"
 		},
 		"version-check": {
             "host": "forumhulp.com",
