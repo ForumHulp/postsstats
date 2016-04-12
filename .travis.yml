@@ -45,7 +45,7 @@ branches:
     - /^release-.*$/
 
 install:
-  - composer require --no-interaction --prefer-source --disable-tls true
+  - composer install --dev --no-interaction --prefer-source --disable-tls
   - travis/prepare-phpbb.sh $EXTNAME $PHPBB_BRANCH
   - cd ../../phpBB3
   - travis/prepare-extension.sh $EXTNAME $PHPBB_BRANCH
