@@ -518,6 +518,7 @@ class stat_functions
 				LEFT JOIN ' . USERS_TABLE . ' u ON (u.user_id = p.poster_id) WHERE p.post_time BETWEEN ' . mktime(0,0,0) . ' AND ' . (mktime(0,0,0) + 86400). ' ORDER BY p.post_time DESC';
 		$result = $db->sql_query_limit($sql, $sconfig['max_online'], $start);
 		$counter = 0;
+		$url = generate_board_url() . '/';
 		while ($row = $db->sql_fetchrow($result))
 		{
 			$counter += 1;
@@ -536,7 +537,7 @@ class stat_functions
 				'FLAG'		=> ($row['username'] != 'Anonymous') ? 'online-user.gif' : 'offline-user.gif',
 				'UNAME'		=> $row['username'],
 				'MODULE'	=> $row['post_subject'],
-				'MODULEURL'	=> '/viewtopic.php?f='. $row['forum_id'] . '&t=' . $row['topic_id'] . '#p ' . $row['post_id'],
+				'MODULEURL'	=> $url . 'viewtopic.php?f='. $row['forum_id'] . '&t=' . $row['topic_id'] . '#p ' . $row['post_id'],
 				'DFLAG'		=> $data['domain'].'.png',
 				'DDESC'		=> $data['description'],
 				'HOST'		=> $data['host'],
