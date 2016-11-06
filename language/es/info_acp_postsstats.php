@@ -19,25 +19,25 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ACP_POSTSTATISTICS'	=> 'Estadísticas de mensajes',
-	'FH_HELPER_NOTICE'		=> 'Forumhulp helper application does not exist!<br />Download <a href="https://github.com/ForumHulp/helper" target="_blank">forumhulp/helper</a> and copy the helper folder to your forumhulp extension folder.',
-	'POSTSSTAT_NOTICE'		=> '<div class="phpinfo"><p class="entry">This extension resides in %1$s » %2$s » %3$s.<br>Config settings are within the application.</p></div>',
+	'FH_HELPER_NOTICE'		=> '¡La aplicación Forumhulp helper no existe!<br />Descargar <a href="https://github.com/ForumHulp/helper" target="_blank">forumhulp/helper</a> y copie la carpeta helper dentro de la carpeta de extensión forumhulp.',
+	'POSTSSTAT_NOTICE'		=> '<div class="phpinfo"><p class="entry">La extensión está en %1$s » %2$s » %3$s.<br>Los ajustes de configuración están en la aplicación.</p></div>',
 ));
 
 // Description of extension
 $lang = array_merge($lang, array(
-	'DESCRIPTION_PAGE'		=> 'Description',
-	'DESCRIPTION_NOTICE'	=> 'Extension note',
+	'DESCRIPTION_PAGE'		=> 'Descripción',
+	'DESCRIPTION_NOTICE'	=> 'Nota de la extensión',
 	'ext_details' => array(
 		'details' => array(
-			'DESCRIPTION_1'		=> 'Graphical overview of posts',
-			'DESCRIPTION_2'		=> 'No extra load',
-			'DESCRIPTION_3'		=> 'Dailly, Monthly and Yearly overviews',
+			'DESCRIPTION_1'		=> 'Vista general gráfica de los mensajes',
+			'DESCRIPTION_2'		=> 'Sin carga extra',
+			'DESCRIPTION_3'		=> 'Visión general, diaria, mensual y anual',
 			'DESCRIPTION_4'		=> 'Configurable',
 		),
 		'note' => array(
-			'NOTICE_1'			=> 'Highchart graphics',
-			'NOTICE_2'			=> 'Printable',
-			'NOTICE_3'			=> 'phpBB 3.2 ready'
+			'NOTICE_1'			=> 'Gráficos de gran calidad',
+			'NOTICE_2'			=> 'Imprimible',
+			'NOTICE_3'			=> 'Preparado para phpBB 3.2'
 		)
 	)
 ));
